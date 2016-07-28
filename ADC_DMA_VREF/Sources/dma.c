@@ -11,6 +11,9 @@
 
 void DMA_init(void) {
 
+   extern uint16_t adc_result[TOTAL_CONVERSIONS_NUMBER];
+   extern uint8_t adc_mux[TOTAL_CHANNEL_NUMBER];
+
    adc_mux[0] = 9;
    adc_mux[1] = 15;
    adc_mux[2] = 8;
@@ -23,7 +26,7 @@ void DMA_init(void) {
 
 
    //Channel 0 transfers next ADC0 input setting from constant buffer to ADC0_SC1A.
-   //**** DMA transfer request source – always requestor
+   //**** DMA transfer request source â€“ always requestor
    DMAMUX_CHCFG0 = DMAMUX_CHCFG_ENBL_MASK |DMAMUX_CHCFG_SOURCE(63) ;
 
    //**** Source address, constant buffer in SRAM
@@ -54,7 +57,7 @@ void DMA_init(void) {
    DMA_TCD0_BITER_ELINKNO = 0x03;
 
    //**** Source address reload after major loop finish, must be subtracted from last
-   //**** pointer value, sampling channel number is 3 each and 1 byte long, 1 × 3 = 3
+   //**** pointer value, sampling channel number is 3 each and 1 byte long, 1 Ã— 3 = 3
    //**** and must be subtract -3
    DMA_TCD0_SLAST = -3;
 
@@ -67,7 +70,7 @@ void DMA_init(void) {
 
 // ******************************************************************************************************************
 
-	//Channel 1 transfers ADC0 result data from ADC0_RA to SRAM buffer.
+	//Channel 21 transfers ADC0 result data from ADC0_RA to SRAM buffer.
 	// Enable Channel 1 and set ADC0 as DMA request source (source number 40)
 	DMAMUX_CHCFG1 = DMAMUX_CHCFG_ENBL_MASK |DMAMUX_CHCFG_SOURCE(40);
 
@@ -106,7 +109,7 @@ void DMA_init(void) {
 
 	//**** Destination address reload after major loop finishes,
 	//**** must be subtracted from last pointer value, sample number is 12 each and 2 bytes long,
-	//**** 2 × 12 = 24 and must be subtract -24
+	//**** 2 Ã— 12 = 24 and must be subtract -24
 	DMA_TCD1_DLASTSGA = -24;
 
 	//**** Common channel setting, linking after major loop enable to channel 0,
