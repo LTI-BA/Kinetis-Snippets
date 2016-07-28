@@ -11,10 +11,11 @@
 
 #include "MK22F51212.h"
 
-#define total_conversions_number 16
-uint16_t adc_result[total_conversions_number];
-#define total_channel_number 3
-uint8_t adc_mux[total_channel_number];
+#define TOTAL_CONVERSIONS_NUMBER 16
+#define TOTAL_CHANNEL_NUMBER 3
+
+uint16_t adc_result[TOTAL_CONVERSIONS_NUMBER];
+uint8_t adc_mux[TOTAL_CHANNEL_NUMBER];
 
 
 void DMA_init(void);
