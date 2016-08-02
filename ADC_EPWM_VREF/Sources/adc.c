@@ -10,10 +10,10 @@
 
 //The calibration function sets the offset calibration value, the minus-side calibration values, and the plus-side calibration values.
 /* For best calibration results: (See page 795 of the reference manual)
-• Set hardware averaging to maximum, that is, SC3[AVGE]=1 and SC3[AVGS]=11 for an average of 32
-• Set ADC clock frequency fADCK less than or equal to 4 MHz
-• VREFH=VDDA
-• Calibrate at nominal voltage and temperature
+â€¢ Set hardware averaging to maximum, that is, SC3[AVGE]=1 and SC3[AVGS]=11 for an average of 32
+â€¢ Set ADC clock frequency fADCK less than or equal to 4 MHz
+â€¢ VREFH=VDDA
+â€¢ Calibrate at nominal voltage and temperature
 return 1 if failed ==> ADC accuracy specifications are not guaranteed, otherweise return 0 */
 int ADC_calibrate(void)
 {
@@ -21,6 +21,8 @@ int ADC_calibrate(void)
 	// Devide the clock by 4 ==>  fADK = 2Mhz (this clock is just used for the calibration process)
 	// choose the 16-bits mode
 	ADC0_CFG1 |= ADC_CFG1_ADICLK(2)| ADC_CFG1_ADIV(2) | ADC_CFG1_MODE(3);
+	//  VREFH=VDDA reference option
+	ADC0_SC2 = ADC_SC2_REFSEL(0) ;
 	// Set hardware averaging to maximum, that is, SC3[AVGE]=1 and SC3[AVGS]=11 (3) for an average of 32
 	// and then start the calibration
 	ADC0_SC3 |= ADC_SC3_AVGS(3) | ADC_SC3_AVGE_MASK | ADC_SC3_CAL_MASK;
